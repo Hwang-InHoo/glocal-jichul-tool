@@ -42,6 +42,7 @@ select:focus,input:focus,textarea:focus{border-color:var(--ac);box-shadow:0 0 0 
 h3.g{font-size:10.5px;font-weight:800;color:var(--mut);letter-spacing:.05em;margin:12px 0 4px}h3.g:first-child{margin-top:0}
 .hint{font-size:11.5px;color:var(--mut);margin-top:7px}
 .ft{margin-top:24px;font-size:11px;color:var(--mut);text-align:center;line-height:1.7}
+.rd{color:#D93F35;font-weight:700}
 </style></head><body><div class="wrap">
 <div class="top"><div class="logo" id="lg"></div><div><h1>글로컬 지출업무 도우미</h1><div class="s">동아대학교 글로컬대학추진단 · 산학연구지원시스템 지출결의</div></div><div class="sp"></div><span class="pill" id="pill"></span></div>
 <div class="kpis" id="kpis"></div>
@@ -51,7 +52,7 @@ h3.g{font-size:10.5px;font-weight:800;color:var(--mut);letter-spacing:.05em;marg
 <div class="r2"><div class="fl"><label class="f">비목</label><input id="bimok" placeholder="예: 교육ㆍ연구 프로그램…"></div><div class="fl"><label class="f">보조세목</label><input id="semok" placeholder="예: 일반수용비"></div></div>
 <div class="fl"><label class="f">지급 유형</label><div class="seg" id="pt"></div></div>
 <div class="fl"><label class="f">용도 (첨부서류 결정)</label><select id="use"></select></div>
-<div class="r2"><div class="fl"><label class="f">부서명</label><input id="dept" placeholder="글로컬대학추진단"></div><div class="fl"><label class="f">추진과제번호</label><input id="pno" placeholder="3-1-1"></div></div>
+<div class="r2"><div class="fl"><label class="f">부서명</label><input id="dept" placeholder="사업기획실"></div><div class="fl"><label class="f">추진과제번호</label><input id="pno" placeholder="3-1-1"></div></div>
 <div class="r2"><div class="fl"><label class="f">금액(원)</label><input id="amt" inputmode="numeric" placeholder="150400"></div><div class="fl"><label class="f">결제일/사용일</label><input id="date" placeholder="2026.03.15."></div></div>
 <div class="fl"><label class="f">항목명 / 적요 뒷부분</label><input id="title" placeholder="3월 운영 간담회비"></div>
 <div class="fl"><label class="f">세부내역 (지출결의제목 3번)</label><textarea id="detail" placeholder="일시·장소·참석자·산출근거 등"></textarea></div>
@@ -59,75 +60,78 @@ h3.g{font-size:10.5px;font-weight:800;color:var(--mut);letter-spacing:.05em;marg
 <div class="out" id="out"></div></div>
 <div class="ft">※ 「산학연구시스템 결의 및 구매 매뉴얼」·「2026 글로컬대학 사업비 집행 지침」 기준. 제출 전 최신 지침 확인.<br>개인카드 불가 · 연구비카드/세금계산서/현금영수증(603-82-07701)만 인정.</div>
 </div>
-<script>var CM={재원출처:"부산라이즈혁신원 (본연구비)",수령계좌:"(부산은행) 113-2019-3880-09  ※ 계좌명 '글로컬' 조회"};
+<script>
+var CM={재원출처:"부산라이즈혁신원 (본연구비)",수령계좌:"(부산은행) 113-2019-3880-09  ※ 계좌명 '글로컬' 조회"};
 var IC={dash:'<path d="M3 13h8V3H3zM13 21h8V8h-8zM13 3v3M3 17v4h8"/>',receipt:'<path d="M5 3v18l2-1 2 1 2-1 2 1 2-1 2 1V3l-2 1-2-1-2 1-2-1-2 1z"/><path d="M9 8h6M9 12h6"/>',card:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>',send:'<path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/>',build:'<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 7h2M14 7h2M8 11h2M14 11h2M8 15h2M14 15h2"/>',tag:'<path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7" cy="7" r="1.3"/>',coins:'<ellipse cx="9" cy="7" rx="6" ry="3"/><path d="M3 7v5c0 1.7 2.7 3 6 3M15 12.5c3.3 0 6-1.3 6-3M21 9.5v8c0 1.7-2.7 3-6 3s-6-1.3-6-3v-3"/>',doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M8 13h8M8 17h6"/>',file:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/>',route:'<circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h6a4 4 0 0 0 0-8H10a4 4 0 0 1 0-8h6"/>',check:'<path d="M20 6L9 17l-5-5"/>',folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'};
 function ic(n){return '<svg class="i" viewBox="0 0 24 24">'+(IC[n]||'')+'</svg>'}
 var $=function(s){return document.querySelector(s)};
 function esc(s){return String(s).replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
 function fmt(n){n=String(n||'').replace(/[^0-9]/g,'');return n?Number(n).toLocaleString('ko-KR'):'0'}
 var PT={
-card:{label:"연구비카드",icon:"card",info:{"구분":"일반지급","내역구분":"기타(일반)","지급처":"기타","지출구분":"자동이체","영수증구분":"연구비카드영수증"},extra:"연구비카드 이용내역조회 첨부 + 해당 건 형광펜 표시. 수령계좌는 (부산은행) 113-2019-3880-09로 수정.",tt:function(x){return "글로컬대학/"+x.dept+"/"+x.pno+"/"+x.prog+"/"+x.title+"("+x.dm+"연구비카드 0000)\n1. 금액: "+x.amtf+"원\n2. 글로컬비목-보조비목-보조세목: "+x.bmok+"\n3. 세부내역\n"+x.di+"\n4. 결제일: "+(x.date||'0000.00.00.')+"\n5. 결제계좌: 부산은행 113-2019-3880-09\n붙임  관련 지출증빙서류 각 1부.  끝."}},
-tax:{label:"전자세금계산서",icon:"receipt",info:{"구분":"일반지급","내역구분":"기타(일반)","지급처":"거래처","지출구분":"계좌이체","영수증구분":"전자세금계산서"},extra:"전자세금계산서 '승인번호' 입력 후 작성일·업체명·금액 확인.",tt:function(x){return "글로컬대학/"+x.dept+"/"+x.pno+"/"+x.prog+"/"+x.title+"\n1. 금액: "+x.amtf+"원\n2. 글로컬비목-보조비목-보조세목: "+x.bmok+"\n3. 세부내역\n"+x.di+"\n   (업체명 / 품목명 / 산출근거)\n붙임  관련 지출증빙서류 각 1부.  끝."}},
-trip:{label:"계좌이체(출장)",icon:"send",info:{"구분":"일반지급","내역구분":"기타(일반)","지급처":"개인지급","지출구분":"계좌이체","영수증구분":"영수증 외 기타"},extra:"출장 신청 시 경비 '기타' 체크, 비고 '재원: 글로컬대학 사업비'. 시내출장은 시내출장신청서.",tt:function(x){return "글로컬대학/"+x.dept+"/"+x.pno+"/"+x.prog+"/"+x.title+"\n1. 금액: "+x.amtf+"원\n2. 글로컬비목-보조비목-보조세목: "+x.bmok+"\n3. 세부내역\n"+x.di+"\n   (지급대상자 / 출장기간 / 출장지 / 일비·식비·숙박비·교통비)\n붙임  관련 지출증빙서류 각 1부.  끝."}},
-expert:{label:"전문가활용비",icon:"build",info:{"구분":"인건비성","내역구분":"전문가활용비","지급처":"개인지급","지출구분":"계좌이체","세금종류":"기타소득"},extra:"산출내용 [지급액]원 x [1]시 형식. 목적·내용·비고(산출근거) 작성.",tt:function(x){return "글로컬대학/"+x.dept+"/"+x.pno+"/"+x.prog+"/"+x.title+"\n1. 금액: "+x.amtf+"원\n2. 글로컬비목-보조비목-보조세목: "+x.bmok+"\n3. 세부내역\n"+x.di+"\n   (지급대상자 / 일시 / 장소 / 내용 / 참석자 / 산출근거)\n붙임  관련 지출증빙서류 각 1부.  끝."}},
-award:{label:"시상금/활동보조금",icon:"tag",info:{"구분":"인건비성","내역구분":"기타(인건비)","지급처":"개인지급","지출구분":"계좌이체","세금종류":"기타소득"},extra:"학생 정보는 시스템에서 불러오기(주민등록 앞자리+학번). 지급확인서·심사표 첨부.",tt:function(x){return "글로컬대학/"+x.dept+"/"+x.pno+"/"+x.prog+"/"+x.title+"\n1. 금액: "+x.amtf+"원\n2. 글로컬비목-보조비목-보조세목: "+x.bmok+"\n3. 세부내역\n"+x.di+"\n   (지급대상자 / 지급액)\n붙임  관련 지출증빙서류 각 1부.  끝."}},
-scholar:{label:"장학금",icon:"coins",info:{"구분":"일반지급","내역구분":"장학금","지급처":"개인지급","지출구분":"계좌이체"},extra:"장학금은 상세내역(엑셀 업로드·검증)으로 지급신청 자동 처리 — 별도 지급신청 불필요.",tt:function(x){return "글로컬대학/"+x.dept+"/"+x.pno+"/"+x.prog+"/"+x.title+"\n1. 금액: "+x.amtf+"원\n2. 글로컬비목-보조비목-보조세목: "+x.bmok+"\n3. 세부내역\n"+x.di+"\n붙임  관련 지출증빙서류 각 1부.  끝."}}
+ card:{label:"연구비카드",icon:"card",info:{"구분":"일반지급","내역구분":"기타(일반)","지급처":"기타","지출구분":"자동이체","영수증구분":"연구비카드영수증"},extra:"연구비카드 이용내역조회 첨부 + 해당 건 형광펜 표시. 수령계좌는 (부산은행) 113-2019-3880-09로 수정.",tt:function(x){return "글로컬대학/"+x.dept+"/"+x.pno+"/"+x.prog+"/"+x.title+"(00월연구비카드0000)\n1. 금액: "+x.amtf+"원\n2. 글로컬비목-보조비목-보조세목: "+x.bmok+"\n3. 세부내역\n"+x.di+"\n4. 결제일: "+(x.date||'0000.00.00.')+"\n5. 결제계좌: 부산은행 113-2019-3880-09\n붙임  관련 지출증빙서류 각 1부.  끝."}},
+ tax:{label:"전자세금계산서",icon:"receipt",info:{"구분":"일반지급","내역구분":"기타(일반)","지급처":"거래처","지출구분":"계좌이체","영수증구분":"전자세금계산서"},extra:"전자세금계산서 '승인번호' 입력 후 작성일·업체명·금액 확인.",tt:function(x){return "글로컬대학/"+x.dept+"/"+x.pno+"/"+x.prog+"/"+x.title+"\n1. 금액: "+x.amtf+"원\n2. 글로컬비목-보조비목-보조세목: "+x.bmok+"\n3. 세부내역\n"+x.di+"\n   (업체명 / 품목명 / 산출근거)\n붙임  관련 지출증빙서류 각 1부.  끝."}},
+ trip:{label:"계좌이체(출장)",icon:"send",info:{"구분":"일반지급","내역구분":"기타(일반)","지급처":"개인지급","지출구분":"계좌이체","영수증구분":"영수증 외 기타"},extra:"출장 신청 시 경비 '기타' 체크, 비고 '재원: 글로컬대학 사업비'. 시내출장은 시내출장신청서.",tt:function(x){return "글로컬대학/"+x.dept+"/"+x.pno+"/"+x.prog+"/"+x.title+"\n1. 금액: "+x.amtf+"원\n2. 글로컬비목-보조비목-보조세목: "+x.bmok+"\n3. 세부내역\n"+x.di+"\n   (지급대상자 / 출장기간 / 출장지 / 일비·식비·숙박비·교통비)\n붙임  관련 지출증빙서류 각 1부.  끝."}},
+ expert:{label:"전문가활용비",icon:"build",info:{"구분":"인건비성","내역구분":"전문가활용비","지급처":"개인지급","지출구분":"계좌이체","세금종류":"기타소득"},extra:"산출내용 [지급액]원 x [1]시 형식. 목적·내용·비고(산출근거) 작성.",tt:function(x){return "글로컬대학/"+x.dept+"/"+x.pno+"/"+x.prog+"/"+x.title+"\n1. 금액: "+x.amtf+"원\n2. 글로컬비목-보조비목-보조세목: "+x.bmok+"\n3. 세부내역\n"+x.di+"\n   (지급대상자 / 일시 / 장소 / 내용 / 참석자 / 산출근거)\n붙임  관련 지출증빙서류 각 1부.  끝."}},
+ award:{label:"시상금/활동보조금",icon:"tag",info:{"구분":"인건비성","내역구분":"기타(인건비)","지급처":"개인지급","지출구분":"계좌이체","세금종류":"기타소득"},extra:"학생 정보는 시스템에서 불러오기(주민등록 앞자리+학번). 지급확인서·심사표 첨부.",tt:function(x){return "글로컬대학/"+x.dept+"/"+x.pno+"/"+x.prog+"/"+x.title+"\n1. 금액: "+x.amtf+"원\n2. 글로컬비목-보조비목-보조세목: "+x.bmok+"\n3. 세부내역\n"+x.di+"\n   (지급대상자 / 지급액)\n붙임  관련 지출증빙서류 각 1부.  끝."}},
+ scholar:{label:"장학금",icon:"coins",info:{"구분":"일반지급","내역구분":"장학금","지급처":"개인지급","지출구분":"계좌이체"},extra:"장학금은 상세내역(엑셀 업로드·검증)으로 지급신청 자동 처리 — 별도 지급신청 불필요.",tt:function(x){return "글로컬대학/"+x.dept+"/"+x.pno+"/"+x.prog+"/"+x.title+"\n1. 금액: "+x.amtf+"원\n2. 글로컬비목-보조비목-보조세목: "+x.bmok+"\n3. 세부내역\n"+x.di+"\n붙임  관련 지출증빙서류 각 1부.  끝."}}
 };
 var USES=[
-{g:"수당성 지급",label:"강의료(강의·발표·통번역)",items:[["특강 결과보고서","자체양식"],["참석자 서명록","별지 제7호"],["지급 확인서(교외/교내)","별지 제8,9호"],["교외: 강사이력·통장·신분증 사본",""]]},
-{g:"수당성 지급",label:"개인상담",items:[["상담료 세부내역(상담·내담자 명단)","첨부"],["개인정보 가림 후 제출",""]]},
-{g:"수당성 지급",label:"자문료/외부멘토비",items:[["지급 확인서(교외/교내)","별지 제8,9호"],["전문가 자문 결과보고서","자체양식"],["교외: 위원이력·통장·신분증 사본",""]]},
-{g:"수당성 지급",label:"심사비",items:[["지급 확인서(교외/교내)","별지 제8,9호"],["심사(결과)표","자체양식"],["교외: 위원이력·통장·신분증 사본",""]]},
-{g:"시상·기념품",label:"시상금",items:[["지급 확인서(교외/교내)","별지 제8,9호"],["심사(결과)표","자체양식"]]},
-{g:"시상·기념품",label:"시상품",items:[["지급 확인서(교외/교내)","별지 제8,9호"],["수령자 명단(성명·학번·연락처)",""],["수령 확인서/기프티콘 발송목록","별지 제10호"],["심사(결과)표","자체양식"],["영수증(구입내역 포함)","첨부"]]},
-{g:"시상·기념품",label:"기념품",items:[["수령 확인서/기프티콘 발송목록","별지 제10호"],["영수증(구입내역 포함)","첨부"]]},
-{g:"식비·다과",label:"회의비/간담회비",items:[["회의록","별지 제6호"],["참석자 서명록","별지 제7호"],["영수증(구입내역 포함)","첨부"]],warn:"주류 일체 지출 불가"},
-{g:"식비·다과",label:"식비",items:[["참석자 서명록","별지 제7호"],["영수증(구입내역 포함)","첨부"]]},
-{g:"식비·다과",label:"다과비",items:[["영수증(구입 세부내역 포함)","첨부"]]},
-{g:"구매",label:"소모품/용역계약 등",items:[["영수증(구입내역 포함)","첨부"],["견적서·타견적서·세금계산서·거래명세서","첨부"]]},
-{g:"구매",label:"기계기구/집기비품",items:[["기자재 도입 계획서","별지 제4호"],["견적서·타견적서·규격서","첨부"]],warn:"3천만원 이상 기자재는 상위기관 사전승인 · 구매 후 라벨스티커 부착"},
-{g:"구매",label:"숙박비",items:[["견적서·타견적서·세금계산서","첨부"]]},
-{g:"구매",label:"차량 대절",items:[["견적서·타견적서·세금계산서·거래명세서","첨부"]]},
-{g:"구매",label:"보험료",items:[["보험증권","첨부"],["영수증(구입내역 포함)","첨부"]]},
-{g:"학생 지원비",label:"장학금",items:[["학생 활동 결과보고서","별지 제11호"],["장학생 명단(장학관리시스템 출력)","시스템"]]},
-{g:"학생 지원비",label:"학생활동보조금(도우미·멘토)",items:[["지급 확인서(교내)","별지 제9호"],["학생 활동 결과보고서","별지 제11호"]]},
-{g:"학생 지원비",label:"활동지원비(실비)",items:[["학생 활동 결과보고서","별지 제11호"],["영수증(구입내역 포함)","첨부"]]},
-{g:"기타",label:"출장비",items:[["출장 결과보고서","별지 제12호"],["출장복명서(시스템 출력)","시스템"],["출장신청서·영수증","첨부"]]}
+ {g:"수당성 지급",label:"강의료(강의·발표·통번역)",items:[["특강 결과보고서","자체양식"],["참석자 서명록","별지 제7호"],["지급 확인서(교외/교내)","별지 제8,9호"],["교외: 강사이력·통장·신분증 사본",""]]},
+ {g:"수당성 지급",label:"개인상담",items:[["상담료 세부내역(상담·내담자 명단)","첨부"],["개인정보 가림 후 제출",""]]},
+ {g:"수당성 지급",label:"자문료/외부멘토비",items:[["지급 확인서(교외/교내)","별지 제8,9호"],["전문가 자문 결과보고서","자체양식"],["교외: 위원이력·통장·신분증 사본",""]]},
+ {g:"수당성 지급",label:"심사비",items:[["지급 확인서(교외/교내)","별지 제8,9호"],["심사(결과)표","자체양식"],["교외: 위원이력·통장·신분증 사본",""]]},
+ {g:"시상·기념품",label:"시상금",items:[["지급 확인서(교외/교내)","별지 제8,9호"],["심사(결과)표","자체양식"]]},
+ {g:"시상·기념품",label:"시상품",items:[["지급 확인서(교외/교내)","별지 제8,9호"],["수령자 명단(성명·학번·연락처)",""],["수령 확인서/기프티콘 발송목록","별지 제10호"],["심사(결과)표","자체양식"],["영수증(구입내역 포함)","첨부"]]},
+ {g:"시상·기념품",label:"기념품",items:[["수령 확인서/기프티콘 발송목록","별지 제10호"],["영수증(구입내역 포함)","첨부"]]},
+ {g:"식비·다과",label:"회의비/간담회비",items:[["회의록","별지 제6호"],["참석자 서명록","별지 제7호"],["영수증(구입내역 포함)","첨부"]],warn:"주류 일체 지출 불가"},
+ {g:"식비·다과",label:"식비",items:[["참석자 서명록","별지 제7호"],["영수증(구입내역 포함)","첨부"]]},
+ {g:"식비·다과",label:"다과비",items:[["영수증(구입 세부내역 포함)","첨부"]]},
+ {g:"구매",label:"소모품/용역계약 등",items:[["영수증(구입내역 포함)","첨부"],["견적서·타견적서·세금계산서·거래명세서","첨부"]]},
+ {g:"구매",label:"기계기구/집기비품",items:[["기자재 도입 계획서","별지 제4호"],["견적서·타견적서·규격서","첨부"]],warn:"3천만원 이상 기자재는 상위기관 사전승인 · 구매 후 라벨스티커 부착"},
+ {g:"구매",label:"숙박비",items:[["견적서·타견적서·세금계산서","첨부"]]},
+ {g:"구매",label:"차량 대절",items:[["견적서·타견적서·세금계산서·거래명세서","첨부"]]},
+ {g:"구매",label:"보험료",items:[["보험증권","첨부"],["영수증(구입내역 포함)","첨부"]]},
+ {g:"학생 지원비",label:"장학금",items:[["학생 활동 결과보고서","별지 제11호"],["장학생 명단(장학관리시스템 출력)","시스템"]]},
+ {g:"학생 지원비",label:"학생활동보조금(도우미·멘토)",items:[["지급 확인서(교내)","별지 제9호"],["학생 활동 결과보고서","별지 제11호"]]},
+ {g:"학생 지원비",label:"활동지원비(실비)",items:[["학생 활동 결과보고서","별지 제11호"],["영수증(구입내역 포함)","첨부"]]},
+ {g:"기타",label:"출장비",items:[["출장 결과보고서","별지 제12호"],["출장복명서(시스템 출력)","시스템"],["출장신청서·영수증","첨부"]]}
 ];
 var CD=[["프로그램 실시 내부결재 공문 (스캔본)","공통"],["프로그램 시행계획서","별지 제2호"],["프로그램 결과보고 내부결재 공문","공통"],["프로그램 시행 결과보고서","별지 제3호"]];
 var st={ptype:"card",use:0};
 function gx(){var d=$('#detail').value.trim();var date=$('#date').value.trim();var bm=$('#bimok').value.trim();var sm=$('#semok').value.trim();
-return{dept:$('#dept').value||'○○부서',pno:$('#pno').value||'0-0-0',prog:$('#prog').value||'프로그램명',title:$('#title').value||'항목명',amtf:fmt($('#amt').value),date:date,dm:date?date.replace(/\./g,'').slice(4,6)+'월 ':'',bmok:bm?bm+'-운영비-'+sm:'(비목 입력)',di:d?d.split('\n').map(function(l){return ' 가. '+l}).join('\n'):' 가. (세부내역 입력)'}}
+ return{dept:$('#dept').value||'사업기획실',pno:$('#pno').value||'0-0-0',prog:$('#prog').value||'프로그램명',title:$('#title').value||'항목명',amtf:fmt($('#amt').value),date:date,dm:date?date.replace(/\./g,'').slice(4,6)+'월 ':'',bmok:bm?bm+'-운영비-'+sm:'(비목 입력)',di:d?d.split('\n').map(function(l){return ' 가. '+l}).join('\n'):' 가. (세부내역 입력)'}}
+function hl(s){return s.replace(/00월연구비카드0000/g,'<span class="rd">00월연구비카드0000</span>').replace(/0-0-0/g,'<span class="rd">0-0-0</span>')}
 function cp(txt){var id='c'+Math.random().toString(36).slice(2,8);setTimeout(function(){var b=document.getElementById(id);if(b)b.onclick=function(){navigator.clipboard.writeText(txt).then(function(){b.innerHTML=ic('check')+' 복사됨';b.className='cp done';setTimeout(function(){b.innerHTML=ic('file')+' 복사';b.className='cp'},1400)})}},0);return '<button class="cp" type="button" id="'+id+'">'+ic('file')+' 복사</button>'}
 function li(t,tag){var c=/별지/.test(tag)?'f':''; return '<li><span class="b">'+ic('check')+'</span><span>'+esc(t)+(tag?'<span class="tg '+c+'">'+tag+'</span>':'')+'</span></li>'}
 function kpis(){var x=gx();var pt=PT[st.ptype];$('#kpis').innerHTML=
-'<div class="tile"><div class="l">'+ic('folder')+' 프로그램</div><div class="v" style="font-size:14px">'+esc($('#prog').value||'—')+'</div></div>'+
-'<div class="tile"><div class="l">'+ic(pt.icon)+' 지급유형</div><div class="v" style="font-size:14px">'+pt.label+'</div></div>'+
-'<div class="tile"><div class="l">'+ic('receipt')+' 금액</div><div class="v">'+(x.amtf)+'<small> 원</small></div></div>'+
-'<div class="tile"><div class="l">'+ic('list')+' 용도</div><div class="v" style="font-size:13px">'+esc(USES[st.use].label)+'</div></div>';
-$('#pill').innerHTML=ic('dash')+' 본연구비 · 부산라이즈혁신원';}
+ '<div class="tile"><div class="l">'+ic('folder')+' 프로그램</div><div class="v" style="font-size:14px">'+esc($('#prog').value||'—')+'</div></div>'+
+ '<div class="tile"><div class="l">'+ic(pt.icon)+' 지급유형</div><div class="v" style="font-size:14px">'+pt.label+'</div></div>'+
+ '<div class="tile"><div class="l">'+ic('receipt')+' 금액</div><div class="v">'+(x.amtf)+'<small> 원</small></div></div>'+
+ '<div class="tile"><div class="l">'+ic('list')+' 용도</div><div class="v" style="font-size:13px">'+esc(USES[st.use].label)+'</div></div>';
+ $('#pill').innerHTML=ic('dash')+' 본연구비 · 부산라이즈혁신원';}
 function render(){var pt=PT[st.ptype],x=gx(),u=USES[st.use];kpis();
-var jeog="글로컬대학/"+x.dept+"/"+x.pno+"/"+x.prog+"/"+x.title;
-var info='';for(var k in pt.info)info+='<tr><td class="k">'+k+'</td><td>'+pt.info[k]+'</td></tr>';
-info+='<tr><td class="k">재원출처</td><td>'+CM.재원출처+'</td></tr><tr><td class="k">요구금액</td><td>'+x.amtf+'원</td></tr><tr><td class="k">수령계좌</td><td>'+(st.ptype=='card'?CM.수령계좌:'수령자 계좌 (자동/신규등록)')+'</td></tr>';
-var stp=[["route","계획보고","프로그램 실시 내부결재 공문(+시행계획서) → 추진단 확인 → 결재 후 집행"],["receipt","집행","계획(안)에 따라 사용 · 연구비카드/세금계산서/현금영수증만 인정"],["doc","결과보고","결과보고 공문(+결과보고서·아래 증빙) 내부결재 → 추진단 메일 제출"],["card","연구비지급신청","산학연구시스템 · 비목/지급처/금액/증빙 입력"],["file","지출(승인)결의","지출결의제목 작성"],["send","연구결재상신","결재선: 기안자 → 부서담당 → 팀장 → 단장"]];
-var sh='';for(var i=0;i<stp.length;i++)sh+='<div class="st"><div class="d">'+ic(stp[i][0])+'</div><div class="t"><b>'+(i+1)+'. '+stp[i][1]+'</b><div class="m">'+stp[i][2]+'</div></div></div>';
-$('#out').innerHTML=
-'<div class="card"><h2><span class="ic">'+ic('route')+'</span> 지출 절차 <span class="n">'+pt.label+'</span></h2><div class="bd"><div class="steps">'+sh+'</div><div class="nt"><b>유의</b> · '+esc(pt.extra)+'</div></div></div>'+
-'<div class="card"><h2><span class="ic">'+ic('card')+'</span> 연구비지급신청 · 적요</h2><div class="bd"><table class="kv"><tbody>'+info+'</tbody></table><h3 class="g">적요 · 글로컬대학/부서명/추진과제번호/프로그램명/항목명</h3><div class="cb">'+cp(jeog)+'<pre>'+esc(jeog)+'</pre></div></div></div>'+
-'<div class="card"><h2><span class="ic">'+ic('file')+'</span> 지출결의제목 <span class="n">'+pt.label+'</span></h2><div class="bd"><div class="cb">'+cp(pt.tt(x))+'<pre>'+esc(pt.tt(x))+'</pre></div><div class="hint">붙임1 양식 기반 · 입력 세부내역 반영. 실제 항목에 맞게 다듬어 사용.</div></div></div>'+
-'<div class="card"><h2><span class="ic">'+ic('list')+'</span> 첨부 서류 <span class="n">'+u.label+'</span></h2><div class="bd"><h3 class="g">공통 내부결재 문서</h3><ul class="ck">'+CD.map(function(d){return li(d[0],d[1])}).join('')+'</ul><h3 class="g">결과보고 증빙 — '+u.g+'</h3><ul class="ck">'+u.items.map(function(d){return li(d[0],d[1])}).join('')+'</ul>'+(u.warn?'<div class="nt"><b>유의</b> · '+esc(u.warn)+'</div>':'')+(st.ptype=='card'?'<div class="nt">연구비카드: <b>이용내역조회</b> 첨부 + 해당 건 형광펜 표시</div>':'')+'</div></div>';}
+ var jeog="글로컬대학/"+x.dept+"/"+x.pno+"/"+x.prog+"/"+x.title;
+ var info='';for(var k in pt.info)info+='<tr><td class="k">'+k+'</td><td>'+pt.info[k]+'</td></tr>';
+ info+='<tr><td class="k">재원출처</td><td>'+CM.재원출처+'</td></tr><tr><td class="k">요구금액</td><td>'+x.amtf+'원</td></tr><tr><td class="k">수령계좌</td><td>'+(st.ptype=='card'?CM.수령계좌:'수령자 계좌 (자동/신규등록)')+'</td></tr>';
+ var stp=[["route","계획보고","프로그램 실시 내부결재 공문(+시행계획서) → 추진단 확인 → 결재 후 집행"],["receipt","집행","계획(안)에 따라 사용 · 연구비카드/세금계산서/현금영수증만 인정"],["doc","결과보고","결과보고 공문(+결과보고서·아래 증빙) 내부결재 → 추진단 메일 제출"],["card","연구비지급신청","산학연구시스템 · 비목/지급처/금액/증빙 입력"],["file","지출(승인)결의","지출결의제목 작성"],["send","연구결재상신","결재선: 기안자 → 부서담당 → 팀장 → 단장"]];
+ var sh='';for(var i=0;i<stp.length;i++)sh+='<div class="st"><div class="d">'+ic(stp[i][0])+'</div><div class="t"><b>'+(i+1)+'. '+stp[i][1]+'</b><div class="m">'+stp[i][2]+'</div></div></div>';
+ $('#out').innerHTML=
+  '<div class="card"><h2><span class="ic">'+ic('route')+'</span> 지출 절차 <span class="n">'+pt.label+'</span></h2><div class="bd"><div class="steps">'+sh+'</div><div class="nt"><b>유의</b> · '+esc(pt.extra)+'</div></div></div>'+
+  '<div class="card"><h2><span class="ic">'+ic('card')+'</span> 연구비지급신청 · 적요</h2><div class="bd"><table class="kv"><tbody>'+info+'</tbody></table><h3 class="g">적요 · 글로컬대학/부서명/추진과제번호/프로그램명/항목명</h3><div class="cb">'+cp(jeog)+'<pre>'+hl(esc(jeog))+'</pre></div></div></div>'+
+  '<div class="card"><h2><span class="ic">'+ic('file')+'</span> 지출결의제목 <span class="n">'+pt.label+'</span></h2><div class="bd"><div class="cb">'+cp(pt.tt(x))+'<pre>'+hl(esc(pt.tt(x)))+'</pre></div><div class="hint">붙임1 양식 기반 · 입력 세부내역 반영. 실제 항목에 맞게 다듬어 사용.</div></div></div>'+
+  '<div class="card"><h2><span class="ic">'+ic('list')+'</span> 첨부 서류 <span class="n">'+u.label+'</span></h2><div class="bd"><h3 class="g">공통 내부결재 문서</h3><ul class="ck">'+CD.map(function(d){return li(d[0],d[1])}).join('')+'</ul><h3 class="g">결과보고 증빙 — '+u.g+'</h3><ul class="ck">'+u.items.map(function(d){return li(d[0],d[1])}).join('')+'</ul>'+(u.warn?'<div class="nt"><b>유의</b> · '+esc(u.warn)+'</div>':'')+(st.ptype=='card'?'<div class="nt">연구비카드: <b>이용내역조회</b> 첨부 + 해당 건 형광펜 표시</div>':'')+'</div></div>';}
 function init(){$('#lg').innerHTML=ic('dash');$('#ici').innerHTML=ic('list');
-$('#pt').innerHTML=Object.keys(PT).map(function(k){return '<button type="button" data-k="'+k+'" aria-pressed="'+(k==st.ptype)+'">'+ic(PT[k].icon)+' '+PT[k].label+'</button>'}).join('');
-$('#pt').onclick=function(e){var b=e.target.closest('button');if(!b)return;st.ptype=b.dataset.k;var cs=$('#pt').children;for(var i=0;i<cs.length;i++)cs[i].setAttribute('aria-pressed',cs[i].dataset.k==st.ptype);render()};
-var cur='',h='';for(var i=0;i<USES.length;i++){if(USES[i].g!=cur){if(cur)h+='</optgroup>';h+='<optgroup label="'+USES[i].g+'">';cur=USES[i].g}h+='<option value="'+i+'">'+USES[i].label+'</option>'}h+='</optgroup>';
-$('#use').innerHTML=h;$('#use').onchange=function(){st.use=+$('#use').value;render()};
-document.addEventListener('input',function(e){if(['prog','bimok','semok','dept','pno','amt','date','title','detail'].indexOf(e.target.id)>=0)render()});
-try{var q=new URLSearchParams(location.search);
-['prog','bimok','semok','dept','pno','amt','date','title','detail'].forEach(function(id){if(q.get(id))$('#'+id).value=q.get(id)});
-if(q.get('amt'))$('#amt').value=String(q.get('amt')).replace(/[^0-9]/g,'');
-var gp=q.get('ptype');if(gp&&PT[gp]){st.ptype=gp;var cs=$('#pt').children;for(var i=0;i<cs.length;i++)cs[i].setAttribute('aria-pressed',cs[i].dataset.k==gp)}
-var gu=q.get('use');if(gu!==null&&gu!==''&&USES[+gu]){st.use=+gu;$('#use').value=gu}
-}catch(e){}
-render();}
-init();</script></body></html>
+ $('#pt').innerHTML=Object.keys(PT).map(function(k){return '<button type="button" data-k="'+k+'" aria-pressed="'+(k==st.ptype)+'">'+ic(PT[k].icon)+' '+PT[k].label+'</button>'}).join('');
+ $('#pt').onclick=function(e){var b=e.target.closest('button');if(!b)return;st.ptype=b.dataset.k;var cs=$('#pt').children;for(var i=0;i<cs.length;i++)cs[i].setAttribute('aria-pressed',cs[i].dataset.k==st.ptype);render()};
+ var cur='',h='';for(var i=0;i<USES.length;i++){if(USES[i].g!=cur){if(cur)h+='</optgroup>';h+='<optgroup label="'+USES[i].g+'">';cur=USES[i].g}h+='<option value="'+i+'">'+USES[i].label+'</option>'}h+='</optgroup>';
+ $('#use').innerHTML=h;$('#use').onchange=function(){st.use=+$('#use').value;render()};
+ document.addEventListener('input',function(e){if(['prog','bimok','semok','dept','pno','amt','date','title','detail'].indexOf(e.target.id)>=0)render()});
+ try{var q=new URLSearchParams(location.search);
+  ['prog','bimok','semok','dept','pno','amt','date','title','detail'].forEach(function(id){if(q.get(id))$('#'+id).value=q.get(id)});
+  if(q.get('amt'))$('#amt').value=String(q.get('amt')).replace(/[^0-9]/g,'');
+  var gp=q.get('ptype');if(gp&&PT[gp]){st.ptype=gp;var cs=$('#pt').children;for(var i=0;i<cs.length;i++)cs[i].setAttribute('aria-pressed',cs[i].dataset.k==gp)}
+  var gu=q.get('use');if(gu!==null&&gu!==''&&USES[+gu]){st.use=+gu;$('#use').value=gu}
+ }catch(e){}
+ render();}
+init();
+</script></body></html>
