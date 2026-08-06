@@ -43,6 +43,7 @@ h3.g{font-size:10.5px;font-weight:800;color:var(--mut);letter-spacing:.05em;marg
 .hint{font-size:11.5px;color:var(--mut);margin-top:7px}
 .ft{margin-top:24px;font-size:11px;color:var(--mut);text-align:center;line-height:1.7}
 .rd{color:#D93F35;font-weight:700}
+.f.req{color:#D93F35}.f.req::after{content:" ✎ 직접입력";font-size:9.5px;font-weight:700;opacity:.85}
 </style></head><body><div class="wrap">
 <div class="top"><div class="logo" id="lg"></div><div><h1>글로컬 지출업무 도우미</h1><div class="s">동아대학교 글로컬대학추진단 · 산학연구지원시스템 지출결의</div></div><div class="sp"></div><span class="pill" id="pill"></span></div>
 <div class="kpis" id="kpis"></div>
@@ -50,12 +51,12 @@ h3.g{font-size:10.5px;font-weight:800;color:var(--mut);letter-spacing:.05em;marg
 <div class="card"><h2><span class="ic" id="ici"></span> 입력</h2><div class="bd">
 <div class="fl"><label class="f">프로그램명</label><input id="prog" placeholder="예: 통합산단 서포터즈"></div>
 <div class="r2"><div class="fl"><label class="f">비목</label><input id="bimok" placeholder="예: 교육ㆍ연구 프로그램…"></div><div class="fl"><label class="f">보조세목</label><input id="semok" placeholder="예: 일반수용비"></div></div>
-<div class="fl"><label class="f">지급 유형</label><div class="seg" id="pt"></div></div>
-<div class="fl"><label class="f">용도 (첨부서류 결정)</label><select id="use"></select></div>
-<div class="r2"><div class="fl"><label class="f">부서명</label><input id="dept" placeholder="사업기획실"></div><div class="fl"><label class="f">추진과제번호</label><input id="pno" placeholder="3-1-1"></div></div>
+<div class="fl"><label class="f req">지급 유형</label><div class="seg" id="pt"></div></div>
+<div class="fl"><label class="f req">용도 (첨부서류 결정)</label><select id="use"></select></div>
+<div class="r2"><div class="fl"><label class="f">부서명</label><input id="dept" placeholder="사업기획실"></div><div class="fl"><label class="f req">추진과제번호</label><input id="pno" placeholder="3-1-1"></div></div>
 <div class="r2"><div class="fl"><label class="f">금액(원)</label><input id="amt" inputmode="numeric" placeholder="150400"></div><div class="fl"><label class="f">결제일/사용일</label><input id="date" placeholder="2026.03.15."></div></div>
 <div class="fl"><label class="f">항목명 / 적요 뒷부분</label><input id="title" placeholder="3월 운영 간담회비"></div>
-<div class="fl"><label class="f">세부내역 (지출결의제목 3번)</label><textarea id="detail" placeholder="일시·장소·참석자·산출근거 등"></textarea></div>
+<div class="fl"><label class="f req">세부내역 (지출결의제목 3번)</label><textarea id="detail" placeholder="일시·장소·참석자·산출근거 등"></textarea></div>
 </div></div>
 <div class="out" id="out"></div></div>
 <div class="ft">※ 「산학연구시스템 결의 및 구매 매뉴얼」·「2026 글로컬대학 사업비 집행 지침」 기준. 제출 전 최신 지침 확인.<br>개인카드 불가 · 연구비카드/세금계산서/현금영수증(603-82-07701)만 인정.</div>
